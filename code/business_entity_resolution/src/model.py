@@ -14,17 +14,18 @@ class EntityMatcherModel:
     Supervised pairwise matching model with F_0.5 threshold calibration.
     """
 
-    def __init__(self, threshold: float = 0.65):
+    def __init__(self, threshold: float = 0.68):
         # Default high threshold to enforce high precision (F0.5 penalizes false merges 2x)
         self.threshold = threshold
         self.model = lgb.LGBMClassifier(
-            n_estimators=150,
-            learning_rate=0.05,
-            num_leaves=31,
-            max_depth=6,
-            min_child_samples=10,
-            subsample=0.8,
-            colsample_bytree=0.8,
+            n_estimators=300,
+            learning_rate=0.03,
+            num_leaves=63,
+            max_depth=7,
+            min_child_samples=20,
+            subsample=0.85,
+            colsample_bytree=0.85,
+            scale_pos_weight=1.0,
             random_state=42,
             n_jobs=-1,
             verbose=-1,

@@ -6,6 +6,7 @@ import re
 from typing import Dict, List, Set
 
 LEGAL_SUFFIXES = {
+    # US / UK / International
     "corp": "corporation",
     "corporation": "corporation",
     "inc": "incorporated",
@@ -19,17 +20,33 @@ LEGAL_SUFFIXES = {
     "co": "company",
     "company": "company",
     "gmbh": "gmbh",
-    "sarl": "sarl",
-    "sa": "sa",
     "plc": "plc",
     "ent": "enterprise",
     "enterprise": "enterprise",
     "enterprises": "enterprise",
     "grp": "group",
     "group": "group",
+    "holdings": "holdings",
+    "services": "services",
+    "solutions": "solutions",
+    "technologies": "technologies",
+    "tech": "technologies",
+    # France
+    "sa": "sa",
+    "sarl": "sarl",
+    "sas": "sas",
+    "sasu": "sasu",
+    "sci": "sci",
+    "snc": "snc",
+    "eurl": "eurl",
+    "cie": "compagnie",
+    "compagnie": "compagnie",
+    "ets": "etablissements",
+    "societe": "societe",
 }
 
 ADDRESS_ABBREVIATIONS = {
+    # English / US / India
     "rd": "road",
     "st": "street",
     "ave": "avenue",
@@ -48,6 +65,21 @@ ADDRESS_ABBREVIATIONS = {
     "w/": "with",
     "pk": "park",
     "pkwy": "parkway",
+    "sq": "square",
+    "ctr": "center",
+    "cir": "circle",
+    # France
+    "bd": "boulevard",
+    "bvd": "boulevard",
+    "av": "avenue",
+    "r": "rue",
+    "rue": "rue",
+    "all": "allee",
+    "imp": "impasse",
+    "pl": "place",
+    "chem": "chemin",
+    "rte": "route",
+    "bat": "batiment",
 }
 
 

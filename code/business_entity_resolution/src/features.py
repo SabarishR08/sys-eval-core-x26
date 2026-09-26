@@ -59,14 +59,26 @@ def compute_string_features(name1: str, name2: str, addr1: str, addr2: str) -> D
     num1 = extract_numbers_and_pins(addr1)
     num2 = extract_numbers_and_pins(addr2)
     if num1 and num2:
-        pin_overlap = 1.0 if (num1 & num2) else 0.0
+        exact_pin_match = 1.0 if (num1 & num2) else 0.0
         pin_jaccard = len(num1 & num2) / len(num1 | num2)
+        pin_diff_count = float(abs(len(num1) - len(num2)))
     elif not num1 and not num2:
-        pin_overlap = 0.5  # Neutral
+        exact_pin_match = 0.5  # Neutral
         pin_jaccard = 0.5
+        pin_diff_count = 0.0
     else:
-        pin_overlap = 0.0
+        exact_pin_match = 0.0
         pin_jaccard = 0.0
+        pin_diff_count = float(abs(len(num1) - len(num2)))
+
+    # First token match (very strong signal in corporate & commercial entity resolution)
+    tok1_first = n1_toks.pop() if len(n1_toks) == 1 else (n1_norm.split()[0] if n1_norm.split() else "")
+    tok2_first = n2_toks.pop() if len(n2_toks) == 1 else (n2_norm.split()[0] if n2_norm.split() else "")
+    first_word_match = 1.0 if (tok1_first and tok2_first and tok1_first == tok2_first) else 0.0
+
+    # Length ratios
+    name_len_diff = abs(len(n1_norm) - len(n2_norm)) / max(1, max(len(n1_norm), len(n2_norm)))
+    addr_len_diff = abs(len(a1_norm) - len(a2_norm)) / max(1, max(len(a1_norm), len(a2_norm)))
 
     # 4. Combined Name + Address Text
     c1 = f"{n1_norm} {a1_norm}"
@@ -81,13 +93,17 @@ def compute_string_features(name1: str, name2: str, addr1: str, addr2: str) -> D
         "name_jw": name_jw,
         "name_jaccard": name_jaccard,
         "name_prefix_match": name_prefix_match,
+        "first_word_match": first_word_match,
+        "name_len_diff": name_len_diff,
         "addr_ratio": addr_ratio,
         "addr_token_sort_ratio": addr_token_sort_ratio,
         "addr_token_set_ratio": addr_token_set_ratio,
         "addr_jw": addr_jw,
         "addr_jaccard": addr_jaccard,
-        "pin_overlap": pin_overlap,
+        "addr_len_diff": addr_len_diff,
+        "exact_pin_match": exact_pin_match,
         "pin_jaccard": pin_jaccard,
+        "pin_diff_count": pin_diff_count,
         "comb_token_sort": comb_token_sort,
     }
 
