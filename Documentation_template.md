@@ -1,6 +1,6 @@
 # ML Challenge 2026: Business Entity Resolution Solution Template
 
-**Team Name:** Team Antigravity  
+**Team Name:** PERCEPTRON  
 **Team Members:** Sabarish R  
 **Submission Date:** 26 September 2026
 

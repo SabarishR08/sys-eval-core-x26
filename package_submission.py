@@ -89,7 +89,7 @@ def package_submission(team_name: str, test_dir: str = "dataset/test"):
 
 def main():
     parser = argparse.ArgumentParser(description="Package Amazon ML Challenge Submission")
-    parser.add_argument("--team-name", default="Team_Antigravity", help="Your team name")
+    parser.add_argument("--team-name", default="PERCEPTRON", help="Your team name")
     parser.add_argument("--test-dir", default="dataset/test", help="Path to dataset/test directory")
     args = parser.parse_args()
 
