@@ -23,7 +23,7 @@ REPO_ROOT = Path(__file__).resolve().parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from utils.validate_submission import validate_submission
+from utils.validate_submission import validate
 
 
 def package_submission(team_name: str, test_dir: str = "dataset/test"):
@@ -40,10 +40,13 @@ def package_submission(team_name: str, test_dir: str = "dataset/test"):
 
     # 1. Run validation
     print("\n[Step 1/3] Running pre-packaging submission validation...")
-    issues = validate_submission(matching_file, candidate_file, test_dir)
-    if issues:
+    errors, warnings = validate(str(matching_file), str(candidate_file), test_dir)
+    if warnings:
+        for w in warnings:
+            print(f"  [WARN] {w}")
+    if errors:
         print("\nERROR: Cannot package submission! Validation failed:")
-        for i, issue in enumerate(issues, 1):
+        for i, issue in enumerate(errors, 1):
             print(f"  {i}. {issue}")
         sys.exit(1)
     print("Pre-validation passed successfully!")
